@@ -1,0 +1,112 @@
+##-------------
+##--  author  > joe biden <ygrs.srgy@gmail.com>
+##-- dotfile  > ${dots_dir}/cfg/zsh/zshrc  --> ${HOME}/.zshrc
+##-- vim:nu:ai:et:ts=4:sw=4:ft=zsh:syn=zsh:fenc=utf8
+##-------------
+##--
+
+##-- general options
+##-------------
+
+##-- completions
+ ## turn on basic completions
+autoload -U compinit && compinit
+ ## tab completion menu
+zstyle ':completion:*' menu select
+
+##-- variables
+##-------------
+
+##-- set local user directories
+[[ $XDG_CACHE_HOME      ]] || export XDG_CACHE_HOME="${HOME}/.cache"
+[[ $XDG_CONFIG_HOME     ]] || export XDG_CONFIG_HOME="${HOME}/.config"
+[[ $XDG_DATA_HOME       ]] || export XDG_DATA_HOME="${HOME}/.local/share"
+[[ $XDG_DESKTOP_DIR     ]] || export XDG_DESKTOP_DIR="${HOME}/.desktop"
+[[ $XDG_DOCUMENTS_DIR   ]] || export XDG_DOCUMENTS_DIR="${HOME}/documents"
+[[ $XDG_DOWNLOAD_DIR    ]] || export XDG_DOWNLOAD_DIR="${HOME}/downloads"
+[[ $XDG_MUSIC_DIR       ]] || export XDG_MUSIC_DIR="${HOME}/media/audio/music"
+[[ $XDG_PICTURES_DIR    ]] || export XDG_PICTURES_DIR="${HOME}/media/pictures"
+[[ $XDG_VIDEOS_DIR      ]] || export XDG_VIDEOS_DIR="${HOME}/media/videos"
+[[ $XDG_PUBLICSHARE_DIR ]] || export XDG_PUBLICSHARE_DIR="${HOME}/.desktop/.public"
+[[ $XDG_TEMPLATES_DIR   ]] || export XDG_TEMPLATES_DIR="${HOME}/.desktop/.templates"
+
+##-- set local program defaults
+export WM="i3"
+export EDITOR="/usr/bin/vi"
+export FCEDIT="${EDITOR}"
+export VISUAL="${EDITOR}"
+export SUDO_EDITOR="/usr/bin/rvim --noplugin"
+export PAGER="/usr/bin/vimpager"
+export SDCV_PAGER="${PAGER}"
+#export SYSTEMD_PAGER="${SDCV_PAGER}"
+export SYSTEMD_PAGER="/usr/bin/less -j4aR"
+#export BROWSER="/usr/bin/luakit"
+#export MOVPLAY="/usr/bin/mpv"
+#export SNDPLAY="/usr/bin/mpv"
+#export PICVIEW="/usr/bin/feh"
+#export TERMINAL="/usr/bin/st"
+
+##-- colour man pages in less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;35m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;30;03;36m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;34m'
+
+
+
+
+##-- aliases
+##-------------
+
+##-- general
+alias C="clear"
+alias Q="exit"
+
+##-- navigation
+ ## listing
+alias ls="ls -Fx --group-directories-first --color=always"
+alias ll="ls -lh"
+alias la="ll -A"
+
+
+##-- configs
+ ## zsh
+alias Z="source ${HOME}/.zshrc"
+alias eZ="${EDITOR:-vi} ${HOME}/.zshrc && source ${HOME}/.zshrc"
+ ## vim
+alias eV="${EDITOR:-vi} ${HOME}/.vimrc"
+ ## i3wm
+alias W="i3-msg 'restart'"
+alias e3="${EDITOR:-vi} ${HOME}/.i3/config && i3-msg 'restart'"
+
+
+
+
+
+##-- plugins and extensions
+##-------------
+
+##-- syntax highlighting (doesn't play well with auto suggestions)
+[[ -e "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+##-- auto suggestions
+
+
+
+
+
+ ## turn on colours
+autoload -U colors && colors
+
+ ## set the prompt
+#RPROMPT=$''
+PROMPT=$' %{\e[1;35m%}%2~%{\e[1;34m%} > %{\e[0m%}'
+
+
+
+
+
