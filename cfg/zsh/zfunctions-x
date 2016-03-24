@@ -1,0 +1,192 @@
+##-- vim:nu:ai:et:ts=4:sw=4:ft=zsh:syn=zsh:fenc=utf8:fdm=marker:
+
+function x() {
+    if [[ -f "$1" ]]; then
+        case "$1" in
+            *.tar.lrz)
+                if [[ -e /usr/bin/lrztar ]]; then
+                    b=$(basename "$1" .tar.lrz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    lrztar -d "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mlrztar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.lrz)
+                if [[ -e /usr/bin/lrunzip ]]; then
+                    b=$(basename "$1" .lrz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    lrunzip "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mlrunzip[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.tar.bz2)
+                if [[ -e /usr/bin/bsdtar ]]; then
+                    b=$(basename "$1" .bz2)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bsdtar xjvf "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbsdtar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.bz2)
+                if [[ -e /usr/bin/bunzip2 ]]; then
+                    b=$(basename "$1" .bz2)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bunzip2 "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbunzip2[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.tar.gz)
+                if [[ -e /usr/bin/bsdtar ]]; then
+                    b=$(basename "$1" .tar.gz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bsdtar zxvf "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbsdtar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.gz)
+                if [[ -e /usr/bin/gunzip ]]; then
+                    b=$(basename "$1" .gz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    gunzip "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mgunzip[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.tar.xz)
+                if [[ -e /usr/bin/bsdtar ]]; then
+                    b=$(basename "$1" .tar.xz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bsdtar Jxvf "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbsdtar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.xz)
+                if [[ -e /usr/bin/xz ]]; then
+                    b=$(basename "$1" .xz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    xz -d "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mxz[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.rar)
+                if [[ -e /usr/bin/unrar ]]; then
+                    b=$(basename "$1" .rar)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    unrar e "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30munrar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.tar)
+                if [[ -e /usr/bin/bsdtar ]]; then
+                    b=$(basename "$1" .tar)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bsdtar xvf "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbsdtar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.tbz2)
+                if [[ -e /usr/bin/bsdtar ]]; then
+                    b=$(basename "$1" .tbz2)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bsdtar xjvf "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbsdtar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.tgz)
+                if [[ -e /usr/bin/bsdtar ]]; then
+                    b=$(basename "$1" .tgz)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    bsdtar xzvf "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30mbsdtar[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.zip)
+                if [[ -e /usr/bin/unzip ]]; then
+                    b=$(basename "$1" .zip)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    unzip "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30munzip[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *.Z)
+                if [[ -e /usr/bin/uncompress ]]; then
+                    b=$(basename "$1" .Z)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    uncompress "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30muncompress[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            *7z)
+                if [[ -e /usr/bin/7z ]]; then
+                    b=$(basename "$1" .7z)
+                    echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+                    7z x "$1"
+                    [[ -d "$b" ]] && cd "$b"
+                else
+                    echo -e "  [1;34m>>[0m [1;30m7z[0m [1;37m is required to unpack this archive...[0m"
+                    return 1
+                fi
+            ;;
+            #*.ext)
+            #    if [[ -e /usr/bin/binary ]]; then
+            #        b=$(basename "$1" .ext)
+            #        echo -e "  [1;34m>>[0m [1;37mUnpacking [1;35m$1[0m [1;37mto[0m [1;32m$(pwd)/${b}[1;37m...[0m"
+            #        binary -options
+            #        [[ -d "$b" ]] && cd "$b"
+            #    else
+            #        echo -e "  [1;34m>>[0m [1;30mbinary[0m [1;37m is required to unpack this archive...[0m"
+            #        return 1
+            #    fi
+            #;;
+            *)
+                echo -e "  [1;31m>>[0m [1;30m$1[0m [1;37mis not a recognized archive format...[0m"
+                return 1
+            ;;
+        esac
+        return 0
+    else
+        echo -e " [1;31m>>[0m [1;30m'$1'[0m [1;37mis not a valid file...[0m"
+        return 1
+    fi
+}

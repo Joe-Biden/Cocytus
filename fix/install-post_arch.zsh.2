@@ -51,7 +51,7 @@ function set_boot_uefi() {
     packages=( 'intel-ucode' 'linux' 'linux-headers' 'linux-firmware' 
                'linux-api-headers' 'util-linux' 'systemd' 'efibootmgr'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
     bootctl install
     [[ -d /boot/loader ]] || mkdir -p /boot/loader
@@ -77,7 +77,7 @@ function set_boot_bios() {
                'linux-api-headers' 'util-linux' 'systemd' 'efibootmgr'
                'syslinux' 'gptfdisk' 'efibootmgr'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
     local config
     config="/boot/syslinux/syslinux.cfg"
@@ -122,7 +122,7 @@ function install_devel() {
     packages+=( 'multilib-devel' 'fakeroot' 'tk' 'jshon' 'make'
                 'pkg-config' 'autoconf' 'automake' 'patch' 'ed'
                 )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit $_i; done
     unset packages
 }
 #}}}
@@ -137,7 +137,7 @@ function install_filesystem() {
                'shfs-utils' 'schroot' 'mtpfs' 'nfs-utils' 'libnfs'
                'nilfs-utils' 's3fs-fuse' 'curlftpfs'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -152,7 +152,7 @@ function install_docs() {
                'ruby-docs' 'scala-docs' 'zsh-doc' 'flac-doc' 'gap-doc' 'gtk-doc'
                'qt5-doc' 'sqlite-doc' 'vigra-doc' 'sagemath-doc' 'xorg-docs'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -161,7 +161,7 @@ function install_nets() {
     local packages
     packages=( 'systemd' 'wpa_supplicant' 'dialog'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
     local interface
     interface=`ip link | awk '/: wl/ {gsub(/:/,"") ; print $2}'`
@@ -184,12 +184,12 @@ function install_xorg() {
         	   )
     ## nvidia gpu
     #packages+=( 'libvdpau' 'nvidia-libgl' 'nvidia-utils' 'nvidia-dkms' 'nvidia-settings' 'nvidia'
-    #            'lib32-libvdpau' 'lib32-nvidia-libgl' 'lib32-nvidia-utils' 'cuda'
+    #            'lib32-libvdpau' 'lib32-nvidia-libgl' 'lib32-nvidia-utils'
     #           )
     ## intel gpu
     packages+=( 'xf86-video-vesa' 'xf86-video-intel' 'intel-tbb' 'vulkan-intel'
                 'libva-intel-driver' 'lib32-libva-intel-driver' 'libtxc_dxtn'
-                'lib32-libtxc_dxtn'
+                'lib32-libtxc_dxtn' 'intel-opencl-runtime' 'cuda'
                 )
     ## amd gpu old card
     #packages+=( 'xf86-video-ati'
@@ -205,7 +205,7 @@ function install_xorg() {
                 )
     packages+=( 'gst-plugins-base' 'gst-plugins-good' 'gst-libav' 'imagemagick'
                 )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -227,7 +227,7 @@ function install_fonts() {
                 'ttf-hannom' 'ttf-indic-otf' 'ttf-junicode' 'ttf-khmer' 'ttf-mph-2b-damase'
                 'ttf-sazanami' 'ttf-tibetan-machine' 'ttf-tlwg' 'ttf-ubraille' 'ttf-hanazono'
                 )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -236,7 +236,7 @@ function install_shell() {
     local packages
     packages=( 'zsh' 'zsh-completions' 'zshdb' 'zsh-syntax-highlighting'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -249,7 +249,7 @@ function install_archive() {
                'unarj' 'arj' 'atool' 'unace' 'libarchive'
                'lib32-bzip2' 'lib32-xz' 'lib32-zlib'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -264,7 +264,7 @@ function install_editor() {
     packages+=( 'aspell' 'aspell-en' 'hunspell' 'hunspell-en' 'hyphen' 'hyphen-en'
                 'libmythes' 'mythes-en' 'psiconv'
                 )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -279,7 +279,7 @@ function install_powman() {
     ## for thinkpad
     #package+=( 'tp_smapi' 'tp_smapi-lts' 
     #           )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -288,7 +288,7 @@ function install_firewall() {
     local packages
     packages=( 'lvm2' 'cryptsetup' 'iptables'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
     local config
     config="/etc/iptables/iptables.rules"
@@ -351,7 +351,7 @@ function install_cli() {
     packages+=( 'mutt' 'procmail' 'offlineimap' 'fetchmail' 'turses' 'weechat' 'irssi'
                 'smtp-forwarder'
                 )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -361,7 +361,7 @@ function install_gui() {
     packages=( 'feh' 'xorg-xcalc' 'xorg-xclock' 'luakit' 'blender' 'simplescreenrecorder'
                'lib32-simplescreenrecorder' 'luxblend25' 'galculator-gtk2'
                )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -401,7 +401,7 @@ function install_multilib() {
                 'lib32-libxv' 'lib32-libxvmc' 'lib32-libxxf86vm' 'lib32-llvm'
                 'lib32-llvm-libs'
                 )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
@@ -420,218 +420,176 @@ function install_prgm() {
     ## template
     #package+=( ''
     #           )
-    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm -- $_i; done
+    for _i in "${packages[@]}"; do pacman -S --needed --asexplicit --noconfirm $_i; done
     unset packages
 }
 #}}}
 ## readlines {{{
 function prompt_for_stuffs() {
     clear
-    echo -e "\n [1;32m>>>>[0m [1;37mBegining Arch Setup Script, stay tuned...\n"
-    sleep 3s
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mOptimize pacman[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mOptimize pacman[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         config_pacman
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mSet time and date?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mSet time and date?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         set_locale
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mSet the hostname?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mSet the hostname?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         set_machine
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall the kernel and headers?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall the kernel and headers?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         set_kern
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mSetup UEFI bootloader?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mSetup UEFI bootloader?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         set_boot_uefi
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mSetup BiOS bootloader?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mSetup BiOS bootloader?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         set_boot_bios
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall development tools?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall development tools?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_devel
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall support for different filesystems?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall support for different filesystems?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_filesystem
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall documentation?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall documentation?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_docs
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall and setup systemd networkd?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall and setup systemd networkd?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_nets
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall X11 display server?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall X11 display server?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_xorg
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall fonts?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall fonts?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_fonts
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall a proper shell?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall a proper shell?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_shell
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall archive and compression tools?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall archive and compression tools?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_archive
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall a proper editor?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall a proper editor?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_editor
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall power managemnt tools?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall power managemnt tools?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_powman
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall a proper firewall?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall a proper firewall?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_firewall
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall some cli utilities and various sub systems?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall some cli utilities and various sub systems?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_cli
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall some GUI tools?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall some GUI tools?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_gui
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall 32-bit compatability?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall 32-bit compatability?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m" 
-        sleep 0.5s
     else
         install_multilib
         echo "  [1;32>>[0m [1;37mFinished...[0m" 
-        sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    read "confirm? [1;34m>>>[0m [1;37mInstall some programming tools (hobby)?[0m [yes|No]  "
-    if [[ ! $confirm =~ ^[Yy][Ee][Ss] ]]; then
+    read "confirm? [1;34m>>>[0m [1;37mInstall some programming tools (hobby)?[0m [y|N]  "
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo "  [1;31m>>[0m [1;37mSkipping...[0m"
         sleep 0.5s
     else
@@ -640,13 +598,13 @@ function prompt_for_stuffs() {
         sleep 0.5s
     fi
     ##------------------------------------------------------------------------------------------
-    echo -e "\n\n  [1;32m>>>>[0m [1;37mCompleted...[0m"
+    echo -e "\n\n  [1;34m>>>[0m [1;37mCompleted...[0m"
     sleep 0.5s
 }
 #}}}
 ## Run the script {{{
 if [[ $USER != "root" ]]; then
-    echo -e " [1;32m>>>>[0m [1;37mRoot privledges required![0m"
+    echo -e " [1;32m>>>[0m [1;37mRoot privledges required![0m"
     exit 1
 else
     prompt_for_stuffs
